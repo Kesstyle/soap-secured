@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://byminsk.kes/soapsecured"
+           xmlns:tns="http://byminsk.kes/soapsecured" elementFormDefault="qualified">
+
+    <xs:element name="PingRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name= "text" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PingResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name= "result" type="tns:PingDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="PingDetails">
+        <xs:sequence>
+            <xs:element name="result" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+

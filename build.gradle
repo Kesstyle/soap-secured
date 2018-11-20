@@ -1,0 +1,64 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'by.minsk.kes.soap.secured'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+configurations {
+	jaxb
+}
+
+def generatedResources="src/main/java"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web-services')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+	jaxb (
+			'com.sun.xml.bind:jaxb-xjc:2.2.7',
+			'com.sun.xml.bind:jaxb-impl:2.2.7'
+	)
+	compile group: 'wsdl4j', name: 'wsdl4j', version: '1.6.2'
+	compile group: 'org.springframework.ws', name: 'spring-ws-security', version: '3.0.4.RELEASE'
+	compile (group: 'com.sun.xml.wss', name: 'xws-security', version: '3.0') {
+		exclude group: 'javax.xml.crypto'
+	}
+}
+
+task jaxb () {
+	ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: configurations.jaxb.asPath)
+	def outputDir = file(generatedResources)
+	inputs.dir 'src/main/resources'
+	outputs.dir outputDir
+
+	doLast {
+		println("Generating Java code from WSDL")
+		mkdir(generatedResources)
+		ant.xjc(
+				destdir: generatedResources,
+				removeOldOutput: 'yes',
+				package: 'by.minsk.kes.soap.secured.soapsecured.model',
+				schema: 'src/main/resources/ping.xsd'
+		)
+	}
+}
+
