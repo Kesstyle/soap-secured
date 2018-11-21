@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://byminsk.kes/soapsecured">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <soap:PingRequest>
+            <soap:text>test</soap:text>
+        </soap:PingRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

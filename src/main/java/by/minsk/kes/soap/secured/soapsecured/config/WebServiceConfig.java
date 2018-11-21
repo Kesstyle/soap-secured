@@ -1,9 +1,12 @@
 package by.minsk.kes.soap.secured.soapsecured.config;
 
+import by.minsk.kes.soap.secured.soapsecured.client.WebServiceGateway;
+
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
@@ -21,6 +24,7 @@ import java.util.List;
 
 @EnableWs
 @Configuration
+@Import({WebServiceClientConfig.class})
 public class WebServiceConfig extends WsConfigurerAdapter {
 
   @Bean
@@ -64,7 +68,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
   @Bean
   KeyStoreFactoryBean trustStore() {
     final KeyStoreFactoryBean keyStoreFactoryBean = new KeyStoreFactoryBean();
-    keyStoreFactoryBean.setLocation(new ClassPathResource("/WEB-INF/MyTruststore.jks"));
+    keyStoreFactoryBean.setLocation(new ClassPathResource("WEB-INF/kes-truststore.jks"));
     keyStoreFactoryBean.setPassword("changeme");
     return keyStoreFactoryBean;
   }

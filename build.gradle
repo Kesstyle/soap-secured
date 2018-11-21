@@ -30,7 +30,9 @@ repositories {
 }
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-web-services')
+	implementation('org.springframework.boot:spring-boot-starter-web-services') {
+		exclude group: 'com.sun.xml.messaging.saaj'
+	}
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.security:spring-security-test')
 	jaxb (
@@ -42,6 +44,9 @@ dependencies {
 	compile (group: 'com.sun.xml.wss', name: 'xws-security', version: '3.0') {
 		exclude group: 'javax.xml.crypto'
 	}
+	compile group: 'com.sun.xml.messaging.saaj', name: 'saaj-impl', version: '1.3'
+	compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
+
 }
 
 task jaxb () {
